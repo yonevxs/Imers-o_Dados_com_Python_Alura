@@ -22,11 +22,9 @@ df = pd.read_csv("https://raw.githubusercontent.com/vqrca/dashboard_salarios_dad
 st.sidebar.header("Filtros | 🛠️")
 
 # Filtro - Ano
-# sorted() - EXPLICAR
 anos_disponiveis = sorted(df['ano'].unique()) # Pega os valores únicos do df, na linha ano  
 
 # sidebar tras a opção de escolher os anos, passando como parâmetro os anos disponíveis
-# multiselect - EXPLICAR
 anos_selecionados = st.sidebar.multiselect("Ano", anos_disponiveis, default = anos_disponiveis)
 
 # Filtro - Senioridade
@@ -65,13 +63,11 @@ st.subheader("Métricas gerais (Salário Anual em U$D)")
 if not df_filtrado.empty:
     salario_medio = df_filtrado['usd'].mean()
     salario_maximo = df_filtrado['usd'].max()
-    #shape[0] - EXPLICAR
     total_registros = df_filtrado.shape[0]
     cargo_mais_frequente = df_filtrado['cargo'].mode()[0]
 else:
     salario_medio, salario_mediano, salario_maximo, total_registros, cargo_mais_comum = 0, 0, 0, ""
 
-# EXPLICAR - toda essa linha
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Salário médio", f"${salario_medio:,.0f}")
 col2.metric("Salário máximo", f"${salario_maximo:,.0f}")
@@ -81,7 +77,6 @@ col4.metric("Cargo mais frequente", cargo_mais_frequente)
 st.markdown("---")
 
 # ------ Criação de Gráficos com Plotly ------
-# Explicar tudo abaixo
 #Subtítulo
 st.subheader("Gráficos")
 
@@ -128,7 +123,6 @@ col_graf3, col_graf4 = st.columns(2)
 with col_graf3:
     if not df_filtrado.empty:
         remoto_contagem = df_filtrado['remoto'].value_counts().reset_index()
-        #Explicar - columns
         remoto_contagem.columns = ['tipo_trabalho', 'quantidade']
 
         grafico_remoto = px.pie(
@@ -163,7 +157,6 @@ with col_graf4:
 # ------ Tabela de Dados Detalhados ------
 st.subheader("Dados Detalhados")
 
-# DUVIDA - Da onde está sendo puxado o df_filtrado?
 st.dataframe(df_filtrado)
 st.markdown("Feito por Lucas Henrique Neves Sousa - Imersão Dados com Python - 2025")
 
